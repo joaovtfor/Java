@@ -13,7 +13,7 @@ public class Ex11 {
                     System.out.println("Also able to D license");
                 }
             } else {
-                System.out.println("Unable to drive18");
+                System.out.println("Unable to drive");
             }
         }
     }
