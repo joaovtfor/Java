@@ -1,4 +1,3 @@
-package Java.FirstClass;
 import java.util.Scanner;
 
 public class Ex11 {
