@@ -1,0 +1,21 @@
+package SecondClass;
+import SecondClass.Carro;
+
+public class Ex2 {
+    public static void main(String[] args) {
+        Carro carro01 = new Carro();
+        Carro carro02 = new Carro();
+
+        carro01.modelo = "Fusca";
+        carro01.ano = 1989;
+
+        System.out.println("Carro 1: ");
+        carro01.exibir();
+
+        carro02.modelo = "Celta";
+        carro02.ano = 2011;
+
+        System.out.println("\nCarro 2: ");
+        carro02.exibir();
+    }
+}
