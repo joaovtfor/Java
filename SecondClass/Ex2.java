@@ -28,10 +28,10 @@ public class Ex2 {
         System.out.println("Moto 1: ");
         moto01.exibir();
         
-        moto01.modelo = "Ninja";
-        moto01.ano = 2010;
+        moto02.modelo = "Ninja";
+        moto02.ano = 2010;
 
         System.out.println("Moto 1: ");
-        moto01.exibir();
+        moto02.exibir();
     }
 }
