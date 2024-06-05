@@ -1,6 +1,4 @@
 package SecondClass;
-import SecondClass.Carro;
-import SecondClass.Moto;
 
 public class Ex2 {
     public static void main(String[] args) {
