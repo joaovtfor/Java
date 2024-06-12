@@ -30,8 +30,6 @@ abstract class Eletronico {
     }
 }
 
-
-
 class Celular extends Eletronico {
     private int qtdCameras;
 
@@ -71,49 +69,69 @@ class Console extends Eletronico {
     }
 }
 
-abstract class Computadores extends Eletronico {
+abstract class CPU extends Eletronico {
     private int qtdRAM;
+    private int qtdVRAM;
 
-    public Computadores (int voltagem, String arquitetura, String motherBoard, int qtdRAM) {
+    public CPU (int voltagem, String arquitetura, String motherBoard, int qtdRAM, int qtdVRAM) {
         super(voltagem, arquitetura, motherBoard);
         this.qtdRAM = qtdRAM;
+        this.qtdVRAM = qtdVRAM;
     }
 
     public int getQtdRAM() {
         return qtdRAM;
     }
-}
 
-class Computador extends Computadores {
-    private int qtdVRAM;
-
-    public Computador (int voltagem, String arquitetura, String motherBoard, int qtdRAM, int qtdVRAM) {
-        super(voltagem, arquitetura, motherBoard, qtdRAM);
-        this.qtdVRAM = qtdVRAM;
-    }
-
-    public int getVRAM() {
+    public int getQtdVRAM() {
         return qtdVRAM;
     }
+
+    public abstract int getQtdNucleos();
 }
 
-class Notebook extends Computadores {
-    private String marca;
+class Computador extends CPU {
+    private int qtdTelas;
+    private int nucleos;
 
-    public Notebook (int voltagem, String arquitetura, String motherBoard, int qtdRAM, String marca) {
-        super(voltagem, arquitetura, motherBoard, qtdRAM);
-        this.marca = marca;
+    public Computador (int voltagem, String arquitetura, String motherBoard, int qtdRAM, int qtdVRAM, int nucleos, int qtdTelas) {
+        super(voltagem, arquitetura, motherBoard, qtdRAM, qtdVRAM);
+        this.nucleos = nucleos;
+        this.qtdTelas = qtdTelas;
     }
 
-    public String getVRAM() {
+    public int getQtdTelas() {
+        return qtdTelas;
+    }
+
+    public int getQtdNucleos() {
+        return nucleos;
+    }
+}
+
+class Notebook extends CPU {
+    private String marca;
+    private int nucleos;
+
+    public Notebook (int voltagem, String arquitetura, String motherBoard, int qtdRAM, int qtdVRAM, String marca, int nucleos) {
+        super(voltagem, arquitetura, motherBoard, qtdRAM, qtdVRAM);
+        this.marca = marca;
+        this.nucleos = nucleos;
+    }
+
+    public String getMarca() {
         return marca;
+    }
+
+    public int getQtdNucleos() {
+        return nucleos;
     }
 }
 
 public class CadastroEletronicos {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ArrayList<Eletronico> veiculos = new ArrayList<>();
+        ArrayList<Eletronico> eletronicos = new ArrayList<>();
         char opcao;
 
         do {
@@ -131,22 +149,22 @@ public class CadastroEletronicos {
 
             switch (opcao) {
                 case 'N':
-                    novoVeiculo(scanner, veiculos);
-                    break;
-                case 'L':
-                    listarVeiculos(veiculos);
-                    break;
-                case 'M':
-                    // listarMotos(veiculos);
+                    novoVeiculo(scanner, eletronicos);
                     break;
                 case 'C':
-                    // listarCaminhoes(veiculos);
+                    listarEletronicos(eletronicos);
                     break;
-                case 'A':
-                    // listarAvioes(veiculos);
+                case 'M':
+                    // listarMotos(eletronicos);
                     break;
-                case 'E':
-                    // listarBarcos(veiculos);
+                case 'V':
+                    // listarCaminhoes(eletronicos);
+                    break;
+                case 'P':
+                    // listarAvioes(eletronicos);
+                    break;
+                case 'K':
+                    // listarBarcos(eletronicos);
                     break;
                 case 'S':
                     System.out.println("Saindo...");
@@ -165,54 +183,76 @@ public class CadastroEletronicos {
         System.out.print("Digite a voltagem: ");
         int voltagem = scanner.nextInt();
 
-        System.out.print("Digite o ano: ");
-        int ano = scanner.nextInt();
+        System.out.print("Digite a arquitetura: ");
+        String arquitetura = scanner.nextLine();
 
         scanner.nextLine();
-        System.out.print("Digite a cor: ");
-        String cor = scanner.nextLine();
+        System.out.print("Digite a placa mãe: ");
+        String motherBoard = scanner.nextLine();
 
-        System.out.print("Digite o tipo (M - Moto, C - Caminhão, A - Avião, E - Embarcação): ");
+        System.out.print("Digite o tipo (C - Celular, M - Monitor, V - Console, P - Computador, K - Notebook): ");
         char tipo = scanner.next().toUpperCase().charAt(0);
 
         Eletronico eletronico = null;
-        if (tipo == 'M') {
-            System.out.print("Digite a cilindrada: ");
-            int cilindradas = scanner.nextInt();
-            eletronico = new Moto(modelo, ano, cor, cilindradas);
-        } else if (tipo == 'C') {
-            System.out.print("Digite a capacidade de carga: ");
-            int capacidadeCarga = scanner.nextInt();
-            eletronico = new Caminhao(modelo, ano, cor, capacidadeCarga);
-        } else if (tipo == 'A') {
-            System.out.print("Digite a quantidade de turbinas: ");
-            int quantidadeTurbinas = scanner.nextInt();
-            eletronico = new Aviao(modelo, ano, cor, quantidadeTurbinas);
-        } else if (tipo == 'E') {
+        if (tipo == 'C') {
+            System.out.print("Digite a quantidade de cameras: ");
+            int qtdCameras = scanner.nextInt();
+            eletronico = new Celular(voltagem, arquitetura, motherBoard, qtdCameras);
+        } else if (tipo == 'M') {
+            System.out.print("Digite o tamanho em polegadas (inteiro): ");
+            int polegadas = scanner.nextInt();
+            eletronico = new Monitor(voltagem, arquitetura, motherBoard, polegadas);
+        } else if (tipo == 'V') {
+            System.out.print("Digite a quantidade de controles: ");
+            int qtdControles = scanner.nextInt();
+            eletronico = new Console(voltagem, arquitetura, motherBoard, qtdControles);
+        } else if (tipo == 'P') {
+            System.out.println("Digite a quantidade de RAM:");
+            int qtdRAM = scanner.nextInt();
+            System.out.println("Digite a quantidade de VRAM:");
+            int qtdVRAM = scanner.nextInt();
+            System.out.println("Digite a quantidade de nucleos:");
+            int nucleos = scanner.nextInt();
+            System.out.println("Digite a quantidade de telas:");
+            int qtdTelas = scanner.nextInt();
+            eletronico = new Computador(voltagem, arquitetura, motherBoard, qtdRAM, qtdVRAM, qtdTelas, nucleos);
+        } else if (tipo == 'K') {
+            System.out.println("Digite a quantidade de RAM:");
+            int qtdRAM = scanner.nextInt();
+            System.out.println("Digite a quantidade de VRAM:");
+            int qtdVRAM = scanner.nextInt();
+            System.out.println("Digite a quantidade de nucleos:");
+            int nucleos = scanner.nextInt();
             scanner.nextLine();
-            System.out.print("Digite o porte da embaração: ");
-            String porte = scanner.nextLine();
-            eletronico = new Embarcacao(modelo, ano, cor, porte);
+            System.out.println("Digite a marca:");
+            String marca = scanner.nextLine();
+            eletronico = new Notebook(voltagem, arquitetura, motherBoard, qtdRAM, qtdVRAM, marca, nucleos);
         } else {
             System.out.println("Tipo inválido!");
             return;
         }
 
         eletronicos.add(eletronico);
-        System.out.println("Veículo cadastrado!");
+        System.out.println("Eletrônico cadastrado!");
     }
 
     public static void listarEletronicos(ArrayList<Eletronico> eletronicos) {
         if (eletronicos.isEmpty()) {
-            System.out.println("Nenhum veículo cadastrado.");
+            System.out.println("Nenhum eletrônico cadastrado.");
         } else {
-            System.out.println("Lista de Veículos:");
+            System.out.println("Lista de Eletrônicos:");
             for (Eletronico eletronico : eletronicos) {
-                System.out.println("Modelo: " + veiculo.getModelo() + ", Ano: " + veiculo.getAno() + ", Cor: " + veiculo.getCor());
-                if (veiculo instanceof Moto) {
-                    System.out.println("Tipo: Moto, Cilindradas: " + ((Moto) veiculo).getCilindradas());
-                } else if (veiculo instanceof Caminhao) {
-                    System.out.println("Tipo: Caminhão, Capacidade de Carga: " + ((Caminhao) veiculo).getCapacidadeCarga());
+                System.out.println("Placa Mãe: " + eletronico.getMotherBoard() + ", Arquitetura: " + eletronico.getArquitetura() + ", Voltagem: " + eletronico.getVoltagem());
+                if (eletronico instanceof Celular) {
+                    System.out.println("Tipo: Celular, Quantidade de Câmeras: " + ((Celular) eletronico).getQtdCameras());
+                } else if (eletronico instanceof Monitor) {
+                    System.out.println("Tipo: Monitor, Tamanho em polegadas: " + ((Monitor) eletronico).getPolegadas());
+                } else if (eletronico instanceof Console) {
+                    System.out.println("Tipo: Console, Quantidade de controles: " + ((Console) eletronico).getQtdControles());
+                } else if (eletronico instanceof Computador) {
+                    System.out.println("Tipo: Computador, Quantidade de RAM: " + ((Computador) eletronico).getQtdRAM() + "Quantidade de VRAM: " + ((Computador) eletronico).getQtdVRAM() + "Quantidade de Núcleos: " + ((Computador) eletronico).getQtdNucleos() + "Quantidade de telas: " + ((Computador) eletronico).getQtdTelas());
+                } else if (eletronico instanceof Notebook) {
+                    System.out.println("Tipo: Quantidade de RAM: " + ((Notebook) eletronico).getQtdRAM() + "Quantidade de VRAM: " + ((Notebook) eletronico).getQtdVRAM() + "Quantidade de Núcleos: " + ((Computador) eletronico).getQtdNucleos() + "Marca: " + ((Notebook) eletronico).getMarca());
                 }
             }
         }
