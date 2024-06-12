@@ -138,10 +138,11 @@ public class CadastroEletronicos {
             System.out.println("Menu:");
             System.out.println("N - Novo");
             System.out.println("L - Listar");
-            System.out.println("M - Listar Motos");
-            System.out.println("C - Listar Caminhões");
-            System.out.println("A - Listar Aviões");
-            System.out.println("E - Listar Embarcações");
+            System.out.println("C - Listar Celulares");
+            System.out.println("M - Listar Monitores");
+            System.out.println("V - Listar Consoles");
+            System.out.println("P - Listar Computadores");
+            System.out.println("K - Listar Notebooks");
             System.out.println("S - Sair");
             System.out.print("Escolha uma opção: ");
 
@@ -151,20 +152,23 @@ public class CadastroEletronicos {
                 case 'N':
                     novoVeiculo(scanner, eletronicos);
                     break;
-                case 'C':
+                case 'L':
                     listarEletronicos(eletronicos);
                     break;
+                case 'C':
+                    listarCelular(eletronicos);
+                    break;
                 case 'M':
-                    // listarMotos(eletronicos);
+                    listarMonitor(eletronicos);
                     break;
                 case 'V':
-                    // listarCaminhoes(eletronicos);
+                    listarConsole(eletronicos);
                     break;
                 case 'P':
-                    // listarAvioes(eletronicos);
+                    listarComputador(eletronicos);
                     break;
                 case 'K':
-                    // listarBarcos(eletronicos);
+                    listarNotebook(eletronicos);
                     break;
                 case 'S':
                     System.out.println("Saindo...");
@@ -183,10 +187,10 @@ public class CadastroEletronicos {
         System.out.print("Digite a voltagem: ");
         int voltagem = scanner.nextInt();
 
+        scanner.nextLine();
         System.out.print("Digite a arquitetura: ");
         String arquitetura = scanner.nextLine();
 
-        scanner.nextLine();
         System.out.print("Digite a placa mãe: ");
         String motherBoard = scanner.nextLine();
 
@@ -250,11 +254,97 @@ public class CadastroEletronicos {
                 } else if (eletronico instanceof Console) {
                     System.out.println("Tipo: Console, Quantidade de controles: " + ((Console) eletronico).getQtdControles());
                 } else if (eletronico instanceof Computador) {
-                    System.out.println("Tipo: Computador, Quantidade de RAM: " + ((Computador) eletronico).getQtdRAM() + "Quantidade de VRAM: " + ((Computador) eletronico).getQtdVRAM() + "Quantidade de Núcleos: " + ((Computador) eletronico).getQtdNucleos() + "Quantidade de telas: " + ((Computador) eletronico).getQtdTelas());
+                    System.out.println("Tipo: Computador, Quantidade de RAM: " + ((Computador) eletronico).getQtdRAM() + ", Quantidade de VRAM: " + ((Computador) eletronico).getQtdVRAM() + ", Quantidade de Núcleos: " + ((Computador) eletronico).getQtdNucleos() + ", Quantidade de telas: " + ((Computador) eletronico).getQtdTelas());
                 } else if (eletronico instanceof Notebook) {
-                    System.out.println("Tipo: Quantidade de RAM: " + ((Notebook) eletronico).getQtdRAM() + "Quantidade de VRAM: " + ((Notebook) eletronico).getQtdVRAM() + "Quantidade de Núcleos: " + ((Computador) eletronico).getQtdNucleos() + "Marca: " + ((Notebook) eletronico).getMarca());
+                    System.out.println("Tipo: Notebook, Quantidade de RAM: " + ((Notebook) eletronico).getQtdRAM() + ", Quantidade de VRAM: " + ((Notebook) eletronico).getQtdVRAM() + ", Quantidade de Núcleos: " + ((Notebook) eletronico).getQtdNucleos() + ", Marca: " + ((Notebook) eletronico).getMarca());
                 }
             }
         }
     }
+
+    public static void listarCelular(ArrayList<Eletronico> eletronicos) {
+        boolean encontrou = false;
+        for (Eletronico eletronico : eletronicos) {
+            if (eletronico instanceof Celular) {
+                if (!encontrou) {
+                    System.out.println("Lista de Celulares:");
+                    encontrou = true;
+                }
+                System.out.println("Placa mãe: " + eletronico.getMotherBoard() + ", Arquitetura: " + eletronico.getArquitetura() + ", Voltagem: " + eletronico.getVoltagem() +
+                        ", Quantidade de câmeras: " + ((Celular) eletronico).getQtdCameras());
+            }
+        }
+        if (!encontrou) {
+            System.out.println("Nenhum celular cadastrado.");
+        }
+    }
+
+    public static void listarMonitor(ArrayList<Eletronico> eletronicos) {
+        boolean encontrou = false;
+        for (Eletronico eletronico : eletronicos) {
+            if (eletronico instanceof Monitor) {
+                if (!encontrou) {
+                    System.out.println("Lista de Monitores:");
+                    encontrou = true;
+                }
+                System.out.println("Placa mãe: " + eletronico.getMotherBoard() + ", Arquitetura: " + eletronico.getArquitetura() + ", Voltagem: " + eletronico.getVoltagem() +
+                        ", Tamanho em polegadas: " + ((Monitor) eletronico).getPolegadas());
+            }
+        }
+        if (!encontrou) {
+            System.out.println("Nenhum monitor cadastrado.");
+        }
+    }
+
+    public static void listarConsole(ArrayList<Eletronico> eletronicos) {
+        boolean encontrou = false;
+        for (Eletronico eletronico : eletronicos) {
+            if (eletronico instanceof Console) {
+                if (!encontrou) {
+                    System.out.println("Lista de Consoles:");
+                    encontrou = true;
+                }
+                System.out.println("Placa mãe: " + eletronico.getMotherBoard() + ", Arquitetura: " + eletronico.getArquitetura() + ", Voltagem: " + eletronico.getVoltagem() +
+                        ", Quantidade de controles: " + ((Console) eletronico).getQtdControles());
+            }
+        }
+        if (!encontrou) {
+            System.out.println("Nenhum console cadastrado.");
+        }
+    }
+
+    public static void listarComputador(ArrayList<Eletronico> eletronicos) {
+        boolean encontrou = false;
+        for (Eletronico eletronico : eletronicos) {
+            if (eletronico instanceof Computador) {
+                if (!encontrou) {
+                    System.out.println("Lista de Computadores:");
+                    encontrou = true;
+                }
+                System.out.println("Placa mãe: " + eletronico.getMotherBoard() + ", Arquitetura: " + eletronico.getArquitetura() + ", Voltagem: " + eletronico.getVoltagem() +
+                        ", Quantidade de RAM: " + ((Computador) eletronico).getQtdRAM() + ", Quantidade de VRAM: " + ((Computador) eletronico).getQtdVRAM()  + ", Quantidade de núcleos: " + ((Computador) eletronico).getQtdNucleos()  + ", Quantidade de telas: " + ((Computador) eletronico).getQtdTelas());
+            }
+        }
+        if (!encontrou) {
+            System.out.println("Nenhum computador cadastrado.");
+        }
+    }
+
+    public static void listarNotebook(ArrayList<Eletronico> eletronicos) {
+        boolean encontrou = false;
+        for (Eletronico eletronico : eletronicos) {
+            if (eletronico instanceof Notebook) {
+                if (!encontrou) {
+                    System.out.println("Lista de Notebooks:");
+                    encontrou = true;
+                }
+                System.out.println("Placa mãe: " + eletronico.getMotherBoard() + ", Arquitetura: " + eletronico.getArquitetura() + ", Voltagem: " + eletronico.getVoltagem() +
+                        ", Quantidade de RAM: " + ((Notebook) eletronico).getQtdRAM() + ", Quantidade de VRAM: " + ((Notebook) eletronico).getQtdVRAM()  + ", Quantidade de núcleos: " + ((Notebook) eletronico).getQtdNucleos()  + ", Quantidade de telas: " + ((Notebook) eletronico).getMarca());
+            }
+        }
+        if (!encontrou) {
+            System.out.println("Nenhum notebook cadastrado.");
+        }
+    }
 }
+
